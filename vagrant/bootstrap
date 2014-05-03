@@ -2,28 +2,35 @@
 
 apt-get update
 
-# install Node.js and friends
-apt-get install nodejs npm -y
+# install Node.js and friends (nodejs in the repos is no longer supported)
+# http://stackoverflow.com/a/21715730
+apt-get install -y python-software-properties python g++ make -y
+add-apt-repository ppa:chris-lea/node.js -y
+apt-get update
+apt-get install nodejs -y
+npm install -g supervisor
+
+# create log dir on host
+mkdir /vagrant/logs/nginx -p
 
 # install and configure webserver
 apt-get install nginx -y
 cp /vagrant/nginx_fluffycupcakes /etc/nginx/sites-available/fluffycupcakes
 chown root.root /etc/nginx/sites-available/fluffycupcakes
-ln -s /etc/nginx/sites-available/fluffycupcakes /etc/nginx/sites-enabled/fluffycupcakes
+ln -sf /etc/nginx/sites-available/fluffycupcakes /etc/nginx/sites-enabled/fluffycupcakes
 service nginx restart
 
-# start node - if used, this script will not end
-# node /srv/web/app.js
 
+# add startup script
+cp /vagrant/upstart_fluffycupcakes-nodejs.conf /etc/init/fluffycupcakes-nodejs.conf
+start fluffycupcakes-nodejs
 
 echo ""
 echo ""
 echo ""
-echo "Do a vagrant ssh"
-echo "$ node /srv/web/app.js"
 echo ""
 echo "You should setup fluffycupcakes.local to point to 172.16.1.2 in /etc/hosts"
 echo "Then you will be able to see the site in your browser on http://fluffycupcakes.local"
 echo ""
-echo "You will need to manually restart node if change any of the files"
+echo "Logs are available in logs/ (on the host machine)"
 echo ""

@@ -6,7 +6,8 @@ upstream node_server {
 server {
 	listen 0.0.0.0:80;
 	server_name fluffycupcakes.local;
-	access_log /var/log/nginx/fluffycupcakes.log;
+	access_log /vagrant/logs/nginx/access_fluffycupcakes.log;
+	error_log /vagrant/logs/nginx/error_fluffycupcakes.log;
 
 	location / {
 		proxy_set_header X-Real-IP $remote_addr;
