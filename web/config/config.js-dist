@@ -1,0 +1,8 @@
+#!/usr/bin/env node
+var Config = require('./../lib/Config.js');
+var config = new Config();
+
+config.altapay.password = "whatever is your password";
+config.altapay.terminals.push("the name of your terminal");
+
+module.exports = config;

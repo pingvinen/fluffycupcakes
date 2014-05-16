@@ -1,0 +1,14 @@
+doctype html
+include mixins
+html
+	head
+		if title
+			title #{title} - FluffyCupcakes
+		else
+			title FluffyCupcakes
+		link(rel='stylesheet', href='/css/style.css')
+	body
+		block content
+
+		script(src='/js/external/jquery-2.1.1.min.js')
+		block scripts

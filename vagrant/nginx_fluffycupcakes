@@ -3,11 +3,36 @@ upstream node_server {
 	server 127.0.0.1:3000;
 }
 
+#
+# sendfile off
+# disables caching done by VirtualBox
+# http://serverfault.com/questions/269420/disable-caching-when-serving-static-files-with-nginx-for-development
+#
+
+
 server {
 	listen 0.0.0.0:80;
 	server_name fluffycupcakes.local;
 	access_log /vagrant/logs/nginx/access_fluffycupcakes.log;
 	error_log /vagrant/logs/nginx/error_fluffycupcakes.log;
+
+	location /css {
+		autoindex on;
+		sendfile off;
+		alias /srv/web/css/;
+	}
+
+	location /js {
+		autoindex on;
+		sendfile off;
+		alias /srv/web/js/;
+	}
+
+	location /img {
+		autoindex on;
+		sendfile off;
+		alias /srv/web/img/;
+	}
 
 	location / {
 		proxy_set_header X-Real-IP $remote_addr;
