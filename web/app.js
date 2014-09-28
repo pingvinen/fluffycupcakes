@@ -10,6 +10,7 @@ var config = require('./config/config.js');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+
 var routes = require('./routes');
 
 app.use(function(req, res, next) {
